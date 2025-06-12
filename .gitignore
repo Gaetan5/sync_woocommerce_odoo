@@ -1,0 +1,7 @@
+# Fichiers/dossiers à ignorer
+__pycache__/
+*.pyc
+.env
+*.log
+venv/
+.envrc

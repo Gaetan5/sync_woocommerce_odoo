@@ -1,0 +1,4 @@
+# Dépendances principales pour sync_woocommerce_odoo
+requests
+odoorpc
+python-dotenv
