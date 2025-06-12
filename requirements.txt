@@ -3,3 +3,6 @@ requests
 odoorpc
 python-dotenv
 woocommerce
+Flask
+pytest-cov
+sentry-sdk[flask]>=1.39.0

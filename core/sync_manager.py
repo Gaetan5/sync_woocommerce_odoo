@@ -1,10 +1,10 @@
-from ..scripts.wc_client import WooCommerceClient
+from scripts.wc_client import WooCommerceClient
 from .odoo_client import OdooClient
 from .models.order import map_wc_order_to_odoo
 from utils.logger import logger
 from core.validator import validate_order
-from utils.database import init_db
-from utils.helpers import is_order_already_synced_db, mark_order_as_synced_db, log_audit
+from utils.database import init_db, is_order_already_synced_db, mark_order_as_synced_db
+from utils.helpers import log_audit
 
 class SyncManager:
     def __init__(self):

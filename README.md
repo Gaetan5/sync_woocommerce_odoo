@@ -84,5 +84,38 @@ cat sync_audit.csv
 
 Pour automatiser l’analyse ou l’export, utilisez un tableur ou un outil de BI.
 
+## Monitoring des erreurs (Sentry)
+
+Pour activer le monitoring des erreurs avec Sentry :
+
+1. Créez un compte sur [https://sentry.io/](https://sentry.io/) et créez un projet Python.
+2. Récupérez le DSN Sentry et ajoutez-le dans votre fichier `.env` :
+
+   ```env
+   SENTRY_DSN=https://...@sentry.io/...
+   ```
+
+3. Relancez le dashboard admin Flask ou tout autre script utilisant Flask.
+
+En cas d’erreur non gérée, un rapport sera envoyé à Sentry automatiquement.
+
+## Monitoring et métriques Prometheus
+
+Le dashboard admin expose un endpoint `/metrics` compatible Prometheus :
+
+- `app_uptime_seconds` : uptime du dashboard en secondes
+- `app_sync_count` : nombre de synchronisations lancées via l’interface
+
+Exemple d’utilisation avec Prometheus :
+
+```yaml
+scrape_configs:
+  - job_name: 'sync_dashboard'
+    static_configs:
+      - targets: ['localhost:8081']
+```
+
+Vous pouvez visualiser les métriques en visitant : [http://localhost:8081/metrics](http://localhost:8081/metrics)
+
 ## Contribution
 Les PR et suggestions sont les bienvenues !

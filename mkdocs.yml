@@ -1,0 +1,23 @@
+site_name: Sync WooCommerce ↔ Odoo
+nav:
+  - Accueil: index.md
+  - API:
+      - sync_manager: reference/core/sync_manager.md
+      - odoo_client: reference/core/odoo_client.md
+      - wc_client: reference/scripts/wc_client.md
+      - validator: reference/core/validator.md
+      - database: reference/utils/database.md
+      - helpers: reference/utils/helpers.md
+      - logger: reference/utils/logger.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_signature: true
+            show_bases: true
+            show_if_no_docstring: true
