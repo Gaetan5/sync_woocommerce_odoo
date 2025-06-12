@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Test environment for WooCommerce-Odoo sync project",
   "scripts": {
-    "test": "python -m pytest tests/ -v",
-    "test-coverage": "python -m pytest tests/ --cov=core --cov=utils --cov-report=html",
-    "lint": "python -m flake8 .",
-    "format": "python -m black .",
-    "start": "python scripts/sync_orders.py"
+    "test": "venv/bin/python -m pytest tests/ -v",
+    "test-coverage": "venv/bin/python -m pytest tests/ --cov=core --cov=utils --cov-report=html",
+    "lint": "venv/bin/python -m flake8 .",
+    "format": "venv/bin/python -m black .",
+    "start": "venv/bin/python scripts/sync_orders.py"
   },
   "devDependencies": {},
   "dependencies": {}
