@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  sync:
+    build: .
+    container_name: sync_woocommerce_odoo
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: ["python", "scripts/sync_orders.py"]
+    restart: unless-stopped
+
+  # odoo:
+  #   image: odoo:16.0
+  #   environment:
+  #     - HOST=localhost
+  #     - USER=admin
+  #     - PASSWORD=admin
+  #   ports:
+  #     - "8069:8069"
+  #   volumes:
+  #     - odoo-data:/var/lib/odoo
+
+volumes:
+  odoo-data:

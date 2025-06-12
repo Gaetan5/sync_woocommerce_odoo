@@ -2,3 +2,4 @@
 requests
 odoorpc
 python-dotenv
+woocommerce
