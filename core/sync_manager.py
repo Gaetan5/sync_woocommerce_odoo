@@ -1,4 +1,4 @@
-from ..scripts.wc_client import WooCommerceClient
+from .wc_client import WooCommerceClient
 from .odoo_client import OdooClient
 from .models.order import map_wc_order_to_odoo
 from utils.logger import logger

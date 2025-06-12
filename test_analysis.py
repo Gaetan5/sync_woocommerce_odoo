@@ -20,10 +20,10 @@ def analyze_project_structure():
     
     structure = {
         "config": ["settings.py", "logging.conf"],
-        "core": ["sync_manager.py", "odoo_client.py", "validator.py", "exceptions.py"],
+        "core": ["sync_manager.py", "odoo_client.py", "validator.py", "exceptions.py", "wc_client.py"],
         "core/models": ["order.py", "customer.py"],
         "utils": ["database.py", "helpers.py", "logger.py"],
-        "scripts": ["sync_orders.py", "wc_client.py", "purge_local_data.py"],
+        "scripts": ["sync_orders.py", "purge_local_data.py"],
         "tests": ["test_validator.py", "test_database.py", "test_audit.py"]
     }
     
