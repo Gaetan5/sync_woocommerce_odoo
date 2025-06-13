@@ -1,5 +1,5 @@
 # Dockerfile pour sync_woocommerce_odoo
-FROM python:3.12-slim
+FROM python:3.12-bookworm
 
 WORKDIR /app
 
