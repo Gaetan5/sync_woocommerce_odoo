@@ -12,16 +12,18 @@ services:
     command: ["python", "scripts/sync_orders.py"]
     restart: unless-stopped
 
-  # odoo:
-  #   image: odoo:16.0
-  #   environment:
-  #     - HOST=localhost
-  #     - USER=admin
-  #     - PASSWORD=admin
-  #   ports:
-  #     - "8069:8069"
-  #   volumes:
-  #     - odoo-data:/var/lib/odoo
+  dashboard:
+    build: .
+    container_name: sync_dashboard
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: ["python", "scripts/admin_dashboard.py"]
+    ports:
+      - "8082:8081"
+    restart: unless-stopped
 
 volumes:
   odoo-data:
