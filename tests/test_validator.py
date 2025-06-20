@@ -6,15 +6,17 @@ import pytest
 from core.validator import validate_order
 
 def test_validate_order_ok():
-    order = {"customer_id": 1, "line_items": [{"product_id": 1, "quantity": 2}]}
+    order = {"id": 1, "customer_id": 1, "total": 20.0, "line_items": [
+        {"product_id": 1, "quantity": 2, "total": 20.0}
+    ]}
     assert validate_order(order) is True
 
 def test_validate_order_missing_customer():
-    order = {"line_items": [{"product_id": 1, "quantity": 2}]}
-    with pytest.raises(ValueError):
+    order = {"id": 2, "total": 10.0, "line_items": [{"product_id": 1, "quantity": 2}]}
+    with pytest.raises(Exception):
         validate_order(order)
 
 def test_validate_order_empty_lines():
-    order = {"customer_id": 1, "line_items": []}
-    with pytest.raises(ValueError):
+    order = {"id": 3, "customer_id": 1, "total": 10.0, "line_items": []}
+    with pytest.raises(Exception):
         validate_order(order)

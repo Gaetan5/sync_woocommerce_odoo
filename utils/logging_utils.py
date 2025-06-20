@@ -22,7 +22,7 @@ for log_file in [sync_log, error_log]:
 import logging
 import logging.config
 from datetime import datetime
-from functools import wrap
+from functools import wraps
 import time
 
 # Charger la configuration logging si ce n'est pas déjà fait
@@ -157,4 +157,4 @@ def log_data_transformation(source, data_type, data_id, message):
         data_id (str/int): Identifiant de la donnée
         message (str): Message de log
     """
-    logger.info(f"[TRANSFORMATION] {source} | {data_type} #{data_id} | {message}") 
+    logger.info(f"[TRANSFORMATION] {source} | {data_type} #{data_id} | {message}")

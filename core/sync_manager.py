@@ -82,7 +82,7 @@ class SyncManager:
                     start_time = time.time()
                     odoo_order_data = map_wc_order_to_odoo(order)
                     log_performance(f"Transformation commande {order_id}", time.time() - start_time)
-                    log_data_transformation("WooCommerce", "Odoo", order_id)
+                    log_data_transformation("WooCommerce", "Odoo", order_id, "Transformation des données pour Odoo terminée")
                     
                     # Création de la commande dans Odoo
                     log_info(f"Création de la commande {order_id} dans Odoo")

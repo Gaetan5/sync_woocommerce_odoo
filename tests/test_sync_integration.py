@@ -34,7 +34,9 @@ def test_sync_orders_integration(mock_odoo_cls, mock_wc_cls):
     # Configuration du mock WooCommerce
     mock_wc = MagicMock()
     mock_wc.get_orders.return_value = [
-        {"id": 42, "customer_id": 1, "line_items": [{"product_id": 1, "quantity": 2, "price": 10.0}]}
+        {"id": 42, "customer_id": 1, "total": 20.0, "line_items": [
+            {"product_id": 1, "quantity": 2, "price": 10.0, "total": 20.0}
+        ]}
     ]
     mock_wc_cls.return_value = mock_wc
 

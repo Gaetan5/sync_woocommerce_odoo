@@ -211,3 +211,19 @@ class DataValidator:
         import re
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, email))
+
+# Ajout d'une fonction de façade pour la validation d'une commande
+from core.validator import DataValidator
+
+def validate_order(order_data):
+    """
+    Fonction de façade pour valider une commande via DataValidator.
+    Args:
+        order_data (dict): Données de la commande
+    Returns:
+        bool: True si la commande est valide
+    Raises:
+        ValidationError: Si la validation échoue
+    """
+    validator = DataValidator()
+    return validator.validate_order(order_data)
