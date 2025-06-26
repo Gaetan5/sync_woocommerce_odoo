@@ -13,6 +13,8 @@ from utils.logging_utils import (
     log_procedure, log_error, log_info, log_api_call,
     log_performance
 )
+from tenacity import retry, wait_exponential, stop_after_attempt
+from ratelimit import limits, sleep_and_retry
 import time
 
 class OdooClient:
@@ -52,6 +54,9 @@ class OdooClient:
             raise OdooAPIError(error_msg)
 
     @log_procedure("Création de commande Odoo")
+    @sleep_and_retry
+    @limits(calls=80, period=60)  # 80 appels par minute (adapter selon quota Odoo)
+    @retry(wait=wait_exponential(multiplier=1, min=2, max=10), stop=stop_after_attempt(5))
     def create_order(self, order_data):
         """
         Crée une nouvelle commande dans Odoo.
@@ -92,6 +97,9 @@ class OdooClient:
             raise OdooAPIError(error_msg)
 
     @log_procedure("Création de client Odoo")
+    @sleep_and_retry
+    @limits(calls=80, period=60)  # 80 appels par minute (adapter selon quota Odoo)
+    @retry(wait=wait_exponential(multiplier=1, min=2, max=10), stop=stop_after_attempt(5))
     def create_customer(self, customer_data):
         """
         Crée un nouveau client dans Odoo.

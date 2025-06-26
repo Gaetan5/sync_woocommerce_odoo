@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>sync_manager - Sync WooCommerce ↔ Odoo</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../../../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Sync WooCommerce ↔ Odoo</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../../.." class="nav-link">Accueil</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">API</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">sync_manager</a>
+</li>
+                                    
+<li>
+    <a href="../odoo_client/" class="dropdown-item">odoo_client</a>
+</li>
+                                    
+<li>
+    <a href="../../scripts/wc_client/" class="dropdown-item">wc_client</a>
+</li>
+                                    
+<li>
+    <a href="../validator/" class="dropdown-item">validator</a>
+</li>
+                                    
+<li>
+    <a href="../../utils/database/" class="dropdown-item">database</a>
+</li>
+                                    
+<li>
+    <a href="../../utils/helpers/" class="dropdown-item">helpers</a>
+</li>
+                                    
+<li>
+    <a href="../../utils/logger/" class="dropdown-item">logger</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../../.." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../odoo_client/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#api-coresync_managerpy" class="nav-link">API : core/sync_manager.py</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#core.sync_manager" class="nav-link">sync_manager</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="api-coresync_managerpy">API : core/sync_manager.py</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="core.sync_manager" class="doc doc-heading">
+            <code>core.sync_manager</code>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Gestionnaire principal de la synchronisation entre WooCommerce et Odoo.
+Cette classe orchestre le processus de synchronisation des commandes, incluant :
+- Récupération des commandes WooCommerce
+- Validation des données
+- Transformation des données
+- Création des commandes dans Odoo
+- Suivi de la synchronisation dans la base de données locale</p>
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="core.sync_manager.SyncManager" class="doc doc-heading">
+            <code>SyncManager</code>
+
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>Gestionnaire de synchronisation qui coordonne le processus de transfert
+des commandes de WooCommerce vers Odoo.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>core/sync_manager.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SyncManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gestionnaire de synchronisation qui coordonne le processus de transfert</span>
+<span class="sd">    des commandes de WooCommerce vers Odoo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise les clients WooCommerce et Odoo, et la base de données locale.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Initialisation du gestionnaire de synchronisation&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wc</span> <span class="o">=</span> <span class="n">WooCommerceClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">odoo</span> <span class="o">=</span> <span class="n">OdooClient</span><span class="p">()</span>
+        <span class="n">init_db</span><span class="p">()</span>
+        <span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Gestionnaire de synchronisation initialisé&quot;</span><span class="p">)</span>
+
+    <span class="nd">@log_procedure</span><span class="p">(</span><span class="s2">&quot;Synchronisation des commandes&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sync_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Synchronise les commandes de WooCommerce vers Odoo.</span>
+
+<span class="sd">        Le processus comprend :</span>
+<span class="sd">        1. Récupération des commandes WooCommerce</span>
+<span class="sd">        2. Pour chaque commande :</span>
+<span class="sd">           - Vérification si déjà synchronisée</span>
+<span class="sd">           - Validation des données</span>
+<span class="sd">           - Transformation en format Odoo</span>
+<span class="sd">           - Création dans Odoo</span>
+<span class="sd">           - Marquage comme synchronisée</span>
+<span class="sd">           - Journalisation de l&#39;audit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Récupération de la date de dernière synchronisation</span>
+            <span class="n">last_synced</span> <span class="o">=</span> <span class="n">get_last_synced_at</span><span class="p">()</span>
+            <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dernière synchronisation à : </span><span class="si">{</span><span class="n">last_synced</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Récupération des commandes WooCommerce incrémentale</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">orders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="o">.</span><span class="n">get_orders</span><span class="p">(</span><span class="n">after</span><span class="o">=</span><span class="n">last_synced</span><span class="p">)</span> <span class="k">if</span> <span class="n">last_synced</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="o">.</span><span class="n">get_orders</span><span class="p">()</span>
+            <span class="n">log_performance</span><span class="p">(</span><span class="s2">&quot;Récupération des commandes WooCommerce&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+            <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">orders</span><span class="p">)</span><span class="si">}</span><span class="s2"> commandes récupérées&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">orders</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">order_id</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                    <span class="n">log_sync_operation</span><span class="p">(</span><span class="s2">&quot;order_processing&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">})</span>
+
+                    <span class="c1"># Vérification si la commande a déjà été synchronisée</span>
+                    <span class="k">if</span> <span class="n">is_order_already_synced_db</span><span class="p">(</span><span class="n">order_id</span><span class="p">):</span>
+                        <span class="n">log_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> déjà synchronisée&quot;</span><span class="p">)</span>
+                        <span class="n">log_audit</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="s2">&quot;ignored&quot;</span><span class="p">,</span> <span class="s2">&quot;Déjà synchronisée&quot;</span><span class="p">)</span>
+                        <span class="k">continue</span>
+
+                    <span class="c1"># Validation des données de la commande</span>
+                    <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation de la commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">validate_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+                    <span class="c1"># Transformation des données pour Odoo</span>
+                    <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformation de la commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">odoo_order_data</span> <span class="o">=</span> <span class="n">map_wc_order_to_odoo</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+                    <span class="n">log_performance</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformation commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+                    <span class="n">log_data_transformation</span><span class="p">(</span><span class="s2">&quot;WooCommerce&quot;</span><span class="p">,</span> <span class="s2">&quot;Odoo&quot;</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="s2">&quot;Transformation des données pour Odoo terminée&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Création de la commande dans Odoo</span>
+                    <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Création de la commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> dans Odoo&quot;</span><span class="p">)</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">odoo</span><span class="o">.</span><span class="n">create_order</span><span class="p">(</span><span class="n">odoo_order_data</span><span class="p">)</span>
+                    <span class="n">log_performance</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Création commande Odoo </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+
+                    <span class="c1"># Marquage de la commande comme synchronisée</span>
+                    <span class="n">mark_order_as_synced_db</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span>
+                    <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> marquée comme synchronisée&quot;</span><span class="p">)</span>
+
+                    <span class="n">log_audit</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="s2">&quot;Synchronisation OK&quot;</span><span class="p">)</span>
+                    <span class="n">log_sync_operation</span><span class="p">(</span><span class="s2">&quot;order_success&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">})</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+                    <span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erreur lors du traitement de la commande </span><span class="si">{</span><span class="n">order</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">ve</span><span class="p">)</span>
+                    <span class="n">log_audit</span><span class="p">(</span><span class="n">order</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">),</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">))</span>
+                    <span class="n">log_sync_operation</span><span class="p">(</span><span class="s2">&quot;order_error&quot;</span><span class="p">,</span> <span class="p">{</span>
+                        <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">),</span>
+                        <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">)</span>
+                    <span class="p">})</span>
+
+            <span class="c1"># Mise à jour de la date de dernière synchronisation</span>
+            <span class="n">set_last_synced_at</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log_error</span><span class="p">(</span><span class="s2">&quot;Erreur lors de la synchronisation&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="core.sync_manager.SyncManager.odoo" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">odoo</span> <span class="o">=</span> <span class="n">OdooClient</span><span class="p">()</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h4 id="core.sync_manager.SyncManager.wc" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">wc</span> <span class="o">=</span> <span class="n">WooCommerceClient</span><span class="p">()</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="core.sync_manager.SyncManager.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialise les clients WooCommerce et Odoo, et la base de données locale.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>core/sync_manager.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialise les clients WooCommerce et Odoo, et la base de données locale.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Initialisation du gestionnaire de synchronisation&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wc</span> <span class="o">=</span> <span class="n">WooCommerceClient</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">odoo</span> <span class="o">=</span> <span class="n">OdooClient</span><span class="p">()</span>
+    <span class="n">init_db</span><span class="p">()</span>
+    <span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Gestionnaire de synchronisation initialisé&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="core.sync_manager.SyncManager.sync_orders" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">sync_orders</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Synchronise les commandes de WooCommerce vers Odoo.</p>
+<p>Le processus comprend :
+1. Récupération des commandes WooCommerce
+2. Pour chaque commande :
+   - Vérification si déjà synchronisée
+   - Validation des données
+   - Transformation en format Odoo
+   - Création dans Odoo
+   - Marquage comme synchronisée
+   - Journalisation de l'audit</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>core/sync_manager.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@log_procedure</span><span class="p">(</span><span class="s2">&quot;Synchronisation des commandes&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sync_orders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Synchronise les commandes de WooCommerce vers Odoo.</span>
+
+<span class="sd">    Le processus comprend :</span>
+<span class="sd">    1. Récupération des commandes WooCommerce</span>
+<span class="sd">    2. Pour chaque commande :</span>
+<span class="sd">       - Vérification si déjà synchronisée</span>
+<span class="sd">       - Validation des données</span>
+<span class="sd">       - Transformation en format Odoo</span>
+<span class="sd">       - Création dans Odoo</span>
+<span class="sd">       - Marquage comme synchronisée</span>
+<span class="sd">       - Journalisation de l&#39;audit</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Récupération de la date de dernière synchronisation</span>
+        <span class="n">last_synced</span> <span class="o">=</span> <span class="n">get_last_synced_at</span><span class="p">()</span>
+        <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dernière synchronisation à : </span><span class="si">{</span><span class="n">last_synced</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Récupération des commandes WooCommerce incrémentale</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">orders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="o">.</span><span class="n">get_orders</span><span class="p">(</span><span class="n">after</span><span class="o">=</span><span class="n">last_synced</span><span class="p">)</span> <span class="k">if</span> <span class="n">last_synced</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">wc</span><span class="o">.</span><span class="n">get_orders</span><span class="p">()</span>
+        <span class="n">log_performance</span><span class="p">(</span><span class="s2">&quot;Récupération des commandes WooCommerce&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+        <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">orders</span><span class="p">)</span><span class="si">}</span><span class="s2"> commandes récupérées&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">orders</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">order_id</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                <span class="n">log_sync_operation</span><span class="p">(</span><span class="s2">&quot;order_processing&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">})</span>
+
+                <span class="c1"># Vérification si la commande a déjà été synchronisée</span>
+                <span class="k">if</span> <span class="n">is_order_already_synced_db</span><span class="p">(</span><span class="n">order_id</span><span class="p">):</span>
+                    <span class="n">log_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> déjà synchronisée&quot;</span><span class="p">)</span>
+                    <span class="n">log_audit</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="s2">&quot;ignored&quot;</span><span class="p">,</span> <span class="s2">&quot;Déjà synchronisée&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># Validation des données de la commande</span>
+                <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation de la commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">validate_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+                <span class="c1"># Transformation des données pour Odoo</span>
+                <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformation de la commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">odoo_order_data</span> <span class="o">=</span> <span class="n">map_wc_order_to_odoo</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+                <span class="n">log_performance</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Transformation commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+                <span class="n">log_data_transformation</span><span class="p">(</span><span class="s2">&quot;WooCommerce&quot;</span><span class="p">,</span> <span class="s2">&quot;Odoo&quot;</span><span class="p">,</span> <span class="n">order_id</span><span class="p">,</span> <span class="s2">&quot;Transformation des données pour Odoo terminée&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Création de la commande dans Odoo</span>
+                <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Création de la commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> dans Odoo&quot;</span><span class="p">)</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">odoo</span><span class="o">.</span><span class="n">create_order</span><span class="p">(</span><span class="n">odoo_order_data</span><span class="p">)</span>
+                <span class="n">log_performance</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Création commande Odoo </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+
+                <span class="c1"># Marquage de la commande comme synchronisée</span>
+                <span class="n">mark_order_as_synced_db</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span>
+                <span class="n">log_info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Commande </span><span class="si">{</span><span class="n">order_id</span><span class="si">}</span><span class="s2"> marquée comme synchronisée&quot;</span><span class="p">)</span>
+
+                <span class="n">log_audit</span><span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="s2">&quot;Synchronisation OK&quot;</span><span class="p">)</span>
+                <span class="n">log_sync_operation</span><span class="p">(</span><span class="s2">&quot;order_success&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order_id</span><span class="p">})</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+                <span class="n">log_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erreur lors du traitement de la commande </span><span class="si">{</span><span class="n">order</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">ve</span><span class="p">)</span>
+                <span class="n">log_audit</span><span class="p">(</span><span class="n">order</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">),</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">))</span>
+                <span class="n">log_sync_operation</span><span class="p">(</span><span class="s2">&quot;order_error&quot;</span><span class="p">,</span> <span class="p">{</span>
+                    <span class="s2">&quot;order_id&quot;</span><span class="p">:</span> <span class="n">order</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">),</span>
+                    <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ve</span><span class="p">)</span>
+                <span class="p">})</span>
+
+        <span class="c1"># Mise à jour de la date de dernière synchronisation</span>
+        <span class="n">set_last_synced_at</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log_error</span><span class="p">(</span><span class="s2">&quot;Erreur lors de la synchronisation&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">raise</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

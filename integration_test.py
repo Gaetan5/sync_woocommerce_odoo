@@ -18,16 +18,19 @@ def mock_woocommerce_api():
             "id": 12345,
             "customer_id": 1,
             "status": "processing",
+            "total": 65.00,
             "line_items": [
                 {
                     "product_id": 101,
                     "quantity": 2,
-                    "price": 25.00
+                    "price": 25.00,
+                    "total": 50.00
                 },
                 {
                     "product_id": 102,
                     "quantity": 1,
-                    "price": 15.00
+                    "price": 15.00,
+                    "total": 15.00
                 }
             ]
         },
@@ -35,11 +38,13 @@ def mock_woocommerce_api():
             "id": 12346,
             "customer_id": 2,
             "status": "processing",
+            "total": 50.00,
             "line_items": [
                 {
                     "product_id": 103,
                     "quantity": 1,
-                    "price": 50.00
+                    "price": 50.00,
+                    "total": 50.00
                 }
             ]
         }
@@ -152,12 +157,10 @@ def test_full_sync_simulation():
             total_synced = sum(1 for _ in range(1, 20000) if db_module.is_order_already_synced_db(_))
             print(f"Orders marked as synced in DB: {synced_count}")
             
-            return {
-                "total_processed": len(mock_wc_orders),
-                "synced": synced_count,
-                "errors": error_count,
-                "success_rate": (synced_count/(synced_count+error_count))*100 if (synced_count+error_count) > 0 else 0
-            }
+            assert synced_count == len(mock_wc_orders), f"Expected all orders to sync, got {synced_count} successes"
+            assert error_count == 0, f"Expected 0 errors, got {error_count}"
+            assert synced_count > 0, "No orders were synced"
+            assert (synced_count/(synced_count+error_count))*100 >= 90, "Success rate below 90%"
             
         finally:
             # Restore original paths
@@ -167,9 +170,8 @@ def test_full_sync_simulation():
 def test_error_scenarios():
     """Test various error scenarios"""
     print("\n=== ERROR SCENARIO TESTING ===")
-    
     from core.validator import validate_order
-    from core.exceptions import SyncError
+    from core.exceptions import ValidationError
     
     error_scenarios = [
         # Invalid order data
@@ -183,50 +185,28 @@ def test_error_scenarios():
         try:
             validate_order(scenario)
             print(f"❌ Scenario {scenario['id']}: Should have failed validation")
-        except (ValueError, KeyError) as e:
+        except ValidationError as e:
             print(f"✅ Scenario {scenario['id']}: Properly caught error - {type(e).__name__}")
             errors_handled += 1
         except Exception as e:
             print(f"⚠️ Scenario {scenario['id']}: Unexpected error type - {type(e).__name__}")
     
     print(f"Error handling score: {errors_handled}/{len(error_scenarios)} ({(errors_handled/len(error_scenarios))*100:.0f}%)")
+    assert errors_handled == len(error_scenarios), f"Not all error scenarios were handled: {errors_handled}/{len(error_scenarios)}"
     
-    return errors_handled / len(error_scenarios)
-
 def main():
     """Run integration tests"""
     print("🧪 INTEGRATION TEST SUITE")
     print("=" * 50)
-    
     try:
         # Run sync simulation
-        sync_results = test_full_sync_simulation()
+        test_full_sync_simulation()
         
         # Run error scenario tests
-        error_handling_score = test_error_scenarios()
+        test_error_scenarios()
         
-        # Overall assessment
-        print(f"\n🎯 INTEGRATION TEST SUMMARY:")
-        print(f"Sync Success Rate: {sync_results['success_rate']:.1f}%")
-        print(f"Error Handling: {error_handling_score*100:.0f}%")
-        
-        if sync_results['success_rate'] >= 90 and error_handling_score >= 0.8:
-            grade = "A"
-        elif sync_results['success_rate'] >= 75 and error_handling_score >= 0.6:
-            grade = "B"
-        elif sync_results['success_rate'] >= 60:
-            grade = "C"
-        else:
-            grade = "D"
-        
-        print(f"Overall Integration Grade: {grade}")
-        
-        return {
-            "sync_results": sync_results,
-            "error_handling_score": error_handling_score,
-            "grade": grade
-        }
-        
+        print("\n🎯 INTEGRATION TEST SUMMARY:")
+        print("All assertions passed. Integration tests successful.")
     except Exception as e:
         print(f"❌ Integration test failed: {e}")
         import traceback

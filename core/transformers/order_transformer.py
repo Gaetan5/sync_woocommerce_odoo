@@ -8,6 +8,7 @@ from utils.logging_utils import (
     log_data_transformation
 )
 from core.exceptions import TransformationError
+import hashlib
 
 class OrderTransformer:
     """
@@ -35,6 +36,9 @@ class OrderTransformer:
         """
         try:
             log_info(f"Transformation de la commande WooCommerce #{wc_order.get('id')}")
+            # Validation checksum avant transformation
+            pre_hash = hashlib.sha256(str(wc_order).encode()).hexdigest()
+            log_info(f"Checksum avant transformation: {pre_hash}")
             
             # Log de la transformation des données
             log_data_transformation(
@@ -59,6 +63,10 @@ class OrderTransformer:
                 'state': 'draft',
                 'order_line': self._transform_order_lines(wc_order)
             }
+            
+            # Validation checksum après transformation
+            post_hash = hashlib.sha256(str(odoo_order).encode()).hexdigest()
+            log_info(f"Checksum après transformation: {post_hash}")
             
             # Log de la transformation réussie
             log_data_transformation(
@@ -133,4 +141,4 @@ class OrderTransformer:
         except Exception as e:
             error_msg = f"Erreur lors de la transformation des lignes de commande: {e}"
             log_error(error_msg, exc_info=e)
-            raise TransformationError(error_msg) 
+            raise TransformationError(error_msg)

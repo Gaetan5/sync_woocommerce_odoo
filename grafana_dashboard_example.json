@@ -1,0 +1,27 @@
+# Exemple de dashboard Grafana pour WooCommerce-Odoo Sync
+# À importer dans Grafana (format JSON)
+{
+  "title": "WooCommerce-Odoo Sync",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Synchronisations réussies",
+      "targets": [{"expr": "sync_success_total"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "type": "stat",
+      "title": "Erreurs de synchronisation",
+      "targets": [{"expr": "sync_error_total"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "type": "graph",
+      "title": "Durée des synchronisations (s)",
+      "targets": [{"expr": "sync_duration_seconds"}],
+      "datasource": "Prometheus"
+    }
+  ],
+  "schemaVersion": 30,
+  "version": 1
+}

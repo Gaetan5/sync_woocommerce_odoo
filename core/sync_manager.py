@@ -20,6 +20,7 @@ from utils.logging_utils import (
 from core.validator import validate_order
 from utils.database import init_db, is_order_already_synced_db, mark_order_as_synced_db
 from utils.helpers import log_audit
+from utils.sync_state import get_last_synced_at, set_last_synced_at
 import time
 
 class SyncManager:
@@ -54,12 +55,13 @@ class SyncManager:
            - Journalisation de l'audit
         """
         try:
-            # Récupération de toutes les commandes WooCommerce
-            log_info("Récupération des commandes WooCommerce")
+            # Récupération de la date de dernière synchronisation
+            last_synced = get_last_synced_at()
+            log_info(f"Dernière synchronisation à : {last_synced}")
+            # Récupération des commandes WooCommerce incrémentale
             start_time = time.time()
-            orders = self.wc.get_orders()
+            orders = self.wc.get_orders(after=last_synced) if last_synced else self.wc.get_orders()
             log_performance("Récupération des commandes WooCommerce", time.time() - start_time)
-            
             log_info(f"{len(orders)} commandes récupérées")
             
             for order in orders:
@@ -105,6 +107,9 @@ class SyncManager:
                         "error": str(ve)
                     })
                     
+            # Mise à jour de la date de dernière synchronisation
+            set_last_synced_at()
+            
         except Exception as e:
             log_error("Erreur lors de la synchronisation", exc_info=e)
             raise

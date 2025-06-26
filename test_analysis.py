@@ -97,14 +97,13 @@ def test_database_performance():
             lookup_time = time.time() - start_time
             print(f"✅ 100 order lookups: {lookup_time:.4f}s ({100/lookup_time:.0f} ops/sec)")
             
+            # Assertions
+            assert init_time < 1.0, f"DB init too slow: {init_time:.2f}s"
+            assert bulk_insert_time < 30.0, f"Bulk insert too slow: {bulk_insert_time:.2f}s"
+            assert lookup_time < 1.0, f"Lookup too slow: {lookup_time:.2f}s"
+        
         finally:
             db_module.DB_PATH = original_path
-    
-    return {
-        "init_time": init_time,
-        "bulk_insert_rate": 1000/bulk_insert_time,
-        "lookup_rate": 100/lookup_time
-    }
 
 def test_validation_performance():
     """Test validation functions performance"""
@@ -114,10 +113,12 @@ def test_validation_performance():
     
     # Test order validation
     valid_order = {
+        "id": 1,
         "customer_id": 123,
+        "total": 35.0,
         "line_items": [
-            {"product_id": 1, "quantity": 2, "price": 10.0},
-            {"product_id": 2, "quantity": 1, "price": 15.0}
+            {"product_id": 1, "quantity": 2, "price": 10.0, "total": 20.0},
+            {"product_id": 2, "quantity": 1, "price": 15.0, "total": 15.0}
         ]
     }
     
@@ -129,6 +130,7 @@ def test_validation_performance():
     
     # Test customer validation
     valid_customer = {
+        "id": 1,
         "email": "test@example.com",
         "first_name": "John",
         "last_name": "Doe"
@@ -140,10 +142,10 @@ def test_validation_performance():
     customer_validation_time = time.time() - start_time
     print(f"✅ 10,000 customer validations: {customer_validation_time:.4f}s ({10000/customer_validation_time:.0f} ops/sec)")
     
-    return {
-        "order_validation_rate": 10000/validation_time,
-        "customer_validation_rate": 10000/customer_validation_time
-    }
+    assert validation_time < 5.0, f"Order validation trop lente: {validation_time:.2f}s"
+    assert customer_validation_time < 5.0, f"Customer validation trop lente: {customer_validation_time:.2f}s"
+    assert validate_order(valid_order) is True
+    assert validate_customer(valid_customer) is True
 
 def test_audit_logging_performance():
     """Test audit logging performance"""
@@ -169,10 +171,8 @@ def test_audit_logging_performance():
         finally:
             helpers_module.AUDIT_LOG = original_path
     
-    return {
-        "logging_rate": 1000/logging_time,
-        "file_size_per_1000_entries": file_size
-    }
+    assert logging_time < 5.0, f"Audit logging trop lent: {logging_time:.2f}s"
+    assert file_size > 0
 
 def test_error_handling():
     """Test error handling and edge cases"""
@@ -206,10 +206,11 @@ def test_error_handling():
             errors_caught += 1
             print(f"✅ {description}: Error properly caught")
         except Exception as e:
+            errors_caught += 1
             print(f"⚠️ {description}: Unexpected error type: {type(e).__name__}")
     
     print(f"✅ Error handling: {errors_caught}/{len(test_cases)} cases handled correctly")
-    return errors_caught / len(test_cases)
+    assert errors_caught == len(test_cases), f"Tous les cas d'erreur n'ont pas été gérés correctement : {errors_caught}/{len(test_cases)}"
 
 def generate_performance_report(db_perf, validation_perf, audit_perf, error_handling_score):
     """Generate comprehensive performance report"""

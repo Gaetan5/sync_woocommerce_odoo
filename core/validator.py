@@ -227,3 +227,16 @@ def validate_order(order_data):
     """
     validator = DataValidator()
     return validator.validate_order(order_data)
+
+def validate_customer(customer_data):
+    """
+    Fonction de façade pour valider un client via DataValidator.
+    Args:
+        customer_data (dict): Données du client
+    Returns:
+        bool: True si le client est valide
+    Raises:
+        ValidationError: Si la validation échoue
+    """
+    validator = DataValidator()
+    return validator.validate_customer(customer_data)

@@ -1,0 +1,6 @@
+# Exemple de configuration Prometheus pour scrapper les métriques du projet
+
+scrape_configs:
+  - job_name: 'woocommerce_odoo_sync'
+    static_configs:
+      - targets: ['localhost:8001']

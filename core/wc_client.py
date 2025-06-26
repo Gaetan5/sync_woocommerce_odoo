@@ -15,6 +15,8 @@ from utils.logging_utils import (
 )
 import requests
 import time
+from tenacity import retry, wait_exponential, stop_after_attempt
+from ratelimit import limits, sleep_and_retry
 
 class WooCommerceClient:
     """
@@ -37,12 +39,16 @@ class WooCommerceClient:
         log_info("Client WooCommerce initialisé")
 
     @log_procedure("Récupération des commandes WooCommerce")
-    def get_orders(self, status="processing"):
+    @sleep_and_retry
+    @limits(calls=80, period=60)  # 80 appels par minute (adapter selon quota WooCommerce)
+    @retry(wait=wait_exponential(multiplier=1, min=2, max=10), stop=stop_after_attempt(5))
+    def get_orders(self, status="processing", after=None):
         """
-        Récupère les commandes WooCommerce avec un statut spécifique.
+        Récupère les commandes WooCommerce avec un statut spécifique et optionnellement après une date donnée.
         
         Args:
             status (str): Statut des commandes à récupérer (par défaut: "processing")
+            after (str): Date ISO 8601 (ex: '2024-01-01T00:00:00') pour ne récupérer que les commandes récentes
             
         Returns:
             list: Liste des commandes au format JSON
@@ -51,14 +57,17 @@ class WooCommerceClient:
             WooCommerceAPIError: Si une erreur survient lors de l'appel API
         """
         try:
-            log_info(f"Récupération des commandes avec le statut: {status}")
+            log_info(f"Récupération des commandes avec le statut: {status} après: {after}")
             start_time = time.time()
+            params = {"status": status}
+            if after:
+                params["after"] = after
             
             # Log de l'appel API
-            log_api_call("WooCommerce", "GET", f"orders?status={status}")
+            log_api_call("WooCommerce", "GET", f"orders?status={status}&after={after}")
             
             # Appel à l'API
-            response = self.wcapi.get("orders", params={"status": status})
+            response = self.wcapi.get("orders", params=params)
             response.raise_for_status()
             
             # Log de la performance

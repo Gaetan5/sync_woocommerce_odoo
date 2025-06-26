@@ -1,3 +1,3 @@
-# API : scripts/wc_client.py
+# API : core/wc_client.py
 
-::: scripts.wc_client
+::: core.wc_client

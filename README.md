@@ -2,6 +2,10 @@
 
 Synchronisation automatisée des commandes et clients entre WooCommerce et Odoo.
 
+## Activer l'environnement virtuel 
+
+ -python3 -m venv venv && source venv/bin/activate 
+
 ## Structure du projet
 
 - `config/` : Configuration (API, logs)
